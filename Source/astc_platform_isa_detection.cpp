@@ -62,9 +62,15 @@ static void detect_cpu_isa()
 #else
 static void detect_cpu_isa()
 {
+#ifdef JSASTC_EMSCRIPTEN
+	g_cpu_has_sse42 = 0;
+	g_cpu_has_popcnt = 0;
+	g_cpu_has_avx2 = 0;
+#else
 	g_cpu_has_sse42 = __builtin_cpu_supports("sse4.2") ? 1 : 0;
 	g_cpu_has_popcnt = __builtin_cpu_supports("popcnt") ? 1 : 0;
 	g_cpu_has_avx2 = __builtin_cpu_supports("avx2") ? 1 : 0;
+#endif
 }
 #endif
 
